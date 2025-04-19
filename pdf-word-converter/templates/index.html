@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>PDF ↔ WORD Dönüştürücü</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="glass-container">
+        <h1>PDF ↔ WORD Dönüştürücü</h1>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+        <form id="convertForm" action="/convert" method="post" enctype="multipart/form-data">
+            <label for="file">Dosya Seç (PDF veya DOCX):</label>
+            <input type="file" name="file" id="file" required>
+            <button type="submit">Dönüştür</button>
+        </form>
+        <div id="progressBarContainer" class="progress-bar-container" style="display:none;">
+            <div id="progressBar" class="progress-bar"></div>
+            <span id="progressText">Yükleniyor...</span>
+        </div>
+    </div>
+    <script>
+        const form = document.getElementById('convertForm');
+        const progressBarContainer = document.getElementById('progressBarContainer');
+        const progressText = document.getElementById('progressText');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            progressBarContainer.style.display = 'block';
+            progressText.textContent = "Dönüştürülüyor...";
+            const formData = new FormData(form);
+            fetch('/convert', {
+                method: 'POST',
+                body: formData
+            })
+            .then(async response => {
+                if (response.ok) {
+                    const disposition = response.headers.get('Content-Disposition');
+                    let filename = "indirilen_dosya";
+                    if (disposition && disposition.indexOf('filename=') !== -1) {
+                        filename = disposition.split('filename=')[1].replace(/["']/g, "");
+                    }
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(url);
+                    progressText.textContent = "Dönüştürme tamamlandı!";
+                } else {
+                    progressText.textContent = "Dönüştürme sırasında hata oluştu.";
+                }
+                setTimeout(() => {
+                    progressBarContainer.style.display = 'none';
+                }, 1500);
+            })
+            .catch(() => {
+                progressText.textContent = "Dönüştürme sırasında hata oluştu.";
+                setTimeout(() => {
+                    progressBarContainer.style.display = 'none';
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>

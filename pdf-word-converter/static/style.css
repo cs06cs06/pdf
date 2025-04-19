@@ -1,0 +1,127 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #c3cfe2 0%, #e2eafc 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.glass-container {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 40px 36px 32px 36px;
+    margin: 40px 0;
+    min-width: 340px;
+    max-width: 95vw;
+}
+
+h1 {
+    color: #22223b;
+    font-size: 2.2rem;
+    margin-bottom: 24px;
+    letter-spacing: 1px;
+    background: none;
+    padding: 0;
+}
+
+form {
+    background: rgba(255,255,255,0.10);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 28px 24px 18px 24px;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(31,38,135,0.07);
+    margin-bottom: 18px;
+    border: 1px solid rgba(255,255,255,0.18);
+}
+
+label {
+    font-size: 1rem;
+    color: #22223b;
+    margin-bottom: 12px;
+}
+
+input[type="file"] {
+    margin-bottom: 18px;
+    background: rgba(255,255,255,0.25);
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    color: #22223b;
+    font-size: 1rem;
+}
+
+button {
+    background: rgba(30, 136, 229, 0.85);
+    color: #fff;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(30,136,229,0.10);
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: rgba(30, 136, 229, 1);
+}
+
+ul {
+    color: #d8000c;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 18px;
+}
+
+.progress-bar-container {
+    width: 100%;
+    margin-top: 16px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(31,38,135,0.07);
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.progress-bar {
+    width: 80%;
+    height: 12px;
+    background: rgba(30,136,229,0.15);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 8px;
+    position: relative;
+}
+.progress-bar::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #64b5f6 0%, #1976d2 100%);
+    animation: progressAnim 1.2s linear infinite;
+    border-radius: 8px;
+    opacity: 0.7;
+}
+
+@keyframes progressAnim {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+#progressText {
+    color: #22223b;
+    font-size: 1rem;
+    opacity: 0.85;
+}

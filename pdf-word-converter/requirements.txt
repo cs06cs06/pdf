@@ -1,0 +1,5 @@
+flask
+pdf2docx
+python-docx
+docx2pdf
+werkzeug
